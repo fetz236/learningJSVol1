@@ -1,2 +1,3 @@
 # learningJSVol1
-just small projects 
+
+Working on some simple projects first with some general notes
