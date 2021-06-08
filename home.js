@@ -92,7 +92,7 @@ console.log(fruit.replace('ban', '123')); //replace ban w 123
 console.log(fruitList.split(',')); //Split via comma
 console.log(fruit.split('')); //Split via char
 
-*/
+
 let fruits = ['apple','banana','berry','pineapple'];
 fruits = new Array('apple','banana','berry','pineapple');
 
@@ -133,3 +133,54 @@ for (let num = 0; num < 10; num++){
 }
 
 console.log(emptyArray);
+
+
+//Objects
+let student = {
+    first : 'Casablanca',
+    last : 'Ooooo', 
+    age: 123,
+    height: 200,
+    studentInfo : function(){
+        return this.first + '\n' + this.last + '\n' +  this.age;
+    },
+};
+
+console.log(student.first); //student.first returns Casablanca
+student.age++; //increments and changes value
+console.log(student.age); //return 124
+console.log(student.studentInfo());
+
+//Conditionals
+var userAge = prompt('Enter age: ');
+
+if ((userAge>=18) && (userAge<=35)){
+    status = 'target demo';
+    console.log(status);
+} else{
+    status = 'not my target';
+    console.log(status);
+}
+*/
+//Switch Stmts
+//day 0 is Sunday
+//day 6 is Saturday
+//rest is weekday
+
+
+switch (3) {
+    case 0:
+        text = 'weekend';
+        break;
+    case 5:
+        text = 'weekend';
+        break;
+    case 6:
+        text = 'weekend';
+        break;
+
+    default:
+        text = 'weekday';
+}   
+
+console.log(text);
