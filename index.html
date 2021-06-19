@@ -43,10 +43,25 @@
             <img id="paper" src="https://image.shutterstock.com/image-vector/two-blank-paper-cartoon-vector-260nw-326072252.jpg" height=150 width=150 onclick="rpsGame(this)">
             <img id="scissors" src="https://cdn3.vectorstock.com/i/1000x1000/36/57/scissors-cartoon-vector-21843657.jpg" height=150 width=150 onclick="rpsGame(this)">
         </div>
-
-
     </div>
+    <div class="container-4">
+        <h2>Change the colour of all buttons </h2>
+        <div class = "flex-box-change-colour" id= "flex-box-pick-colour">
+            <form action="">
+                <select name="backdrop" id="background" onchange="buttonColourChange(this)">
+                    <option value="random">Random</option>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="reset">Reset</option>
+                </select>
+            </form>
 
+            <button class="btn btn-primary"> Wee!</button>
+            <button class="btn btn-primary"> Yahoo!</button>
+            <button class="btn btn-primary"> Google!</button>
+            <button class="btn btn-primary"> Facebook!</button>
+        </div>
+    </div>
     <script src ="static/js/script.js"></script>
 </body>
 </html>

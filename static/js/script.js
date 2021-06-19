@@ -96,3 +96,63 @@ function rpsFrontEnd(human_image, bot_image, end_message){
     document.getElementById('rps').appendChild(message_div);
     document.getElementById('rps').appendChild(bot_div);
 }
+
+var all_buttons = document.getElementsByTagName('button');
+console.log(all_buttons);
+function buttonsCopied(){
+    
+    let copied = [];
+    for (let i=0; i < all_buttons.length; i++){
+        copied.push(all_buttons[i].classList[1]);
+    }
+    return copied;
+}
+
+var copied_array = buttonsCopied();
+console.log(copied_array);
+function buttonColourChange(selected_value){
+    var copied_array = buttonsCopied();
+    if (selected_value.value === 'red'){
+        buttonsRed();
+    }
+    else if(selected_value.value === 'green'){
+        buttonsGreen();
+    }
+    else if(selected_value.value === 'reset'){
+        buttonsReset();
+    }
+    else{
+        randomColours();
+    }
+}
+
+function buttonsRed(){
+    for(let i =0; i < all_buttons.length; i++){
+        all_buttons[i].classList.remove(all_buttons[i].classList[1]);
+        all_buttons[i].classList.add('btn-danger');
+    }
+}
+
+function buttonsGreen(){
+    for(let i =0; i < all_buttons.length; i++){
+        all_buttons[i].classList.remove(all_buttons[i].classList[1]);
+        all_buttons[i].classList.add('btn-success');
+    }
+}
+
+function buttonsReset(){
+    for(let i =0; i < all_buttons.length; i++){
+        all_buttons[i].classList.remove(all_buttons[i].classList[1]);
+        all_buttons[i].classList.add(copied_array[i]);
+    }
+}
+
+function randomColours(){
+    let choices = ['btn-primary','btn-success','btn-danger','btn-warning'];
+
+    for(let i =0; i < all_buttons.length; i++){
+        let random_number = Math.floor(Math.random() * 4);
+        all_buttons[i].classList.remove(all_buttons[i].classList[1]);
+        all_buttons[i].classList.add(choices[random_number]);
+    }
+}
