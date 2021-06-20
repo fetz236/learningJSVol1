@@ -165,6 +165,9 @@ let blackjackGame = {
     'dealer': {'scoreSpan' : '#dealer-blackjack-score', 'div': '#dealer-box', 'score': 0},
     'cards' : ['2','3','4', '5', '6', '7', '8', '9', '10', 'K', 'Q', 'J', 'A'],
     'cards_map' : {'2' : 2,'3':3,'4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'K':10, 'Q':10, 'J':10, 'A':[1,11]},
+    'wins':0,
+    'losses': 0,
+    'draws': 0,
 };
 
 const user = blackjackGame['you'];
@@ -180,9 +183,7 @@ function blackjackHit(){
     let random_card = generateCard();
     showCard(user, random_card);
     updateScore(user, random_card);
-
     showScore(user);
-    
      
 }
 
@@ -244,16 +245,49 @@ function showScore(player){
     else{
         document.querySelector(player['scoreSpan']).textContent = 'BUST!';
         document.querySelector(player['scoreSpan']).style.color = 'red';
+        bust_sound.play();
+        let winner = computeWinner();
+        showWinner(winner);
+        blackJackDeal();
         
     }
     
 }
-function dealerLogic(){
-    let card = generateCard();
 
+/*
+    My program here differs from the one by Clever Programmer. The code will make the dealer
+    play automatically based on the dealer's rules similar to traditional blackjack
+*/
+async function dealerLogic(){
+    //Case 1: > user
+    //Case 2: >= 17
+    if (user['score']<=21){
+        while(dealing['score']<17 && user['score']>dealing['score']){
+            dealerPlay();
+            await sleep(1000);
+        }
+        let winner = computeWinner();
+        showWinner(winner);
+    }
+    else{
+        computeWinner();
+        showWinner(dealing);
+    }
+    
+
+    
+    
+}
+
+function dealerPlay(){
+    let card = generateCard();
     showCard(dealing, card);
     updateScore(dealing, card);
     showScore(dealing);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function computeWinner(){
@@ -261,16 +295,39 @@ function computeWinner(){
     if(user['score'] <= 21){
         if(user['score']> dealing['score'] || dealing['score']>21){
             winner = user;
+            blackjackGame['wins']++;
         }
         else if(user['score']< dealing['score']){
             winner = dealing;
+            blackjackGame['losses']++;
+
         }
         else if(user['score'] === dealing['score']){
-            //tie
+            winner = null;
+            blackjackGame['draws']++;
+
         }
 
     }
     else {
-        winner = dealer;
+        winner = dealing;
+        blackjackGame['losses']++;
+    }
+
+    return winner;
+}
+
+function showWinner(winner){
+    let message, message_colour;
+    if (winner === user){
+        document.querySelector('#wins').textContent = blackjackGame['wins'];
+    }
+    else if(winner === dealing){
+        document.querySelector('#losses').textContent = blackjackGame['losses'];
+
+    }
+    else{
+        document.querySelector('#draws').textContent = blackjackGame['draws'];
+
     }
 }
