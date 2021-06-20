@@ -97,6 +97,7 @@ function rpsFrontEnd(human_image, bot_image, end_message){
     document.getElementById('rps').appendChild(bot_div);
 }
 
+//Task 4
 var all_buttons = document.getElementsByTagName('button');
 console.log(all_buttons);
 function buttonsCopied(){
@@ -155,4 +156,48 @@ function randomColours(){
         all_buttons[i].classList.remove(all_buttons[i].classList[1]);
         all_buttons[i].classList.add(choices[random_number]);
     }
+}
+
+//Task 5
+
+let blackjackGame = {
+    'you': {'scoreSpan' : '#your-blackjack-score', 'div': '#your-box', 'score': 0},
+    'dealer': {'scoreSpan' : '#dealer-blackjack-score', 'div': '#dealer-box', 'score': 0},
+    'cards' : ['2','3','4', '5', '6', '7', '8', '9', '10', 'K', 'Q', 'J', 'A'],
+};
+
+const user = blackjackGame['you'];
+const dealing = blackjackGame['dealer'];
+const hit_sound = new Audio('static/sounds/swish.m4a');
+const bust_sound = new Audio('static/sounds/aww.m4a');
+
+document.querySelector('#blackjack-hit-button').addEventListener('click', blackjackHit);
+document.querySelector('#blackjack-deal-button').addEventListener('click', blackJackDeal);
+
+function blackjackHit(){
+    let random_card = generateCard();
+    showCard(dealing, random_card);
+}
+
+function showCard(player, random_card){
+    let card_image = document.createElement('img');
+    card_image.src = 'static/images/${random_card}.png';
+    document.querySelector(player['div']).appendChild(card_image);
+    hit_sound.play();
+}
+
+function blackJackDeal(){
+    let user_images = document.querySelector('#your-box').querySelectorAll('img');
+    let dealer_images = document.querySelector('#dealer-box').querySelectorAll('img');
+    for (let i =0; i < user_images.length; i++){
+        user_images[i].remove();
+    }
+    for (let i =0; i < dealer_images.length; i++){
+        dealer_images[i].remove();
+    }
+}
+
+function generateCard(){
+    let random_card = Math.floor(Math.random() *13);
+    return blackjackGame['cards'][random_card];
 }
