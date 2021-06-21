@@ -168,6 +168,8 @@ let blackjackGame = {
     'wins':0,
     'losses': 0,
     'draws': 0,
+    'cash': 1000,
+    'bet' : 0,
 };
 
 const user = blackjackGame['you'];
@@ -178,6 +180,11 @@ const bust_sound = new Audio('static/sounds/aww.mp3');
 document.querySelector('#blackjack-hit-button').addEventListener('click', blackjackHit);
 document.querySelector('#blackjack-stand-button').addEventListener('click', dealerLogic);
 document.querySelector('#blackjack-deal-button').addEventListener('click', blackJackDeal);
+
+document.querySelector('#blackjack-increase-bet').addEventListener('click', betIncrease);
+document.querySelector('#blackjack-decrease-bet').addEventListener('click', betDecrease);
+
+
 
 function blackjackHit(){
     let random_card = generateCard();
@@ -209,6 +216,7 @@ function blackJackDeal(){
 
     user['score'] = 0;
     dealing['score'] = 0;
+    blackjackGame['bet'] = 0;
 
     document.querySelector('#your-blackjack-score').textContent = 0;
     document.querySelector('#dealer-blackjack-score').textContent = 0;
@@ -255,9 +263,10 @@ function showScore(player){
 }
 
 /*
-    My program here differs from the one by Clever Programmer. The code will make the dealer
+    The app here differs from the methodology by Clever Programmer. The code will make the dealer
     play automatically based on the dealer's rules similar to traditional blackjack
 */
+
 async function dealerLogic(){
     //Case 1: > user
     //Case 2: >= 17
@@ -274,9 +283,6 @@ async function dealerLogic(){
         showWinner(dealing);
     }
     
-
-    
-    
 }
 
 function dealerPlay(){
@@ -292,14 +298,17 @@ function sleep(ms) {
 
 function computeWinner(){
     let winner;
+    let bet = blackjackGame['bet'];
     if(user['score'] <= 21){
         if(user['score']> dealing['score'] || dealing['score']>21){
             winner = user;
             blackjackGame['wins']++;
+            blackjackGame['cash'] += blackjackGame['bet'];
         }
         else if(user['score']< dealing['score']){
             winner = dealing;
             blackjackGame['losses']++;
+            blackjackGame['cash'] -= blackjackGame['bet'];
 
         }
         else if(user['score'] === dealing['score']){
@@ -312,13 +321,14 @@ function computeWinner(){
     else {
         winner = dealing;
         blackjackGame['losses']++;
+        blackjackGame['cash'] -= blackjackGame['bet'];
     }
 
     return winner;
 }
 
 function showWinner(winner){
-    let message, message_colour;
+
     if (winner === user){
         document.querySelector('#wins').textContent = blackjackGame['wins'];
     }
@@ -331,3 +341,50 @@ function showWinner(winner){
 
     }
 }
+
+function betIncrease(){
+    if(blackjackGame['bet'] >= 0){
+        blackjackGame['bet']+= 10;
+        blackjackGame['cash'] -= 10;
+        document.querySelector('#cash').textContent = blackjackGame['cash'];
+        document.querySelector('#bet').textContent = blackjackGame['bet'];
+    }
+}
+
+function betDecrease(){
+    if(blackjackGame['bet'] > 0){
+        blackjackGame['bet']-= 10;
+        blackjackGame['cash'] += 10;
+        document.querySelector('#cash').textContent = blackjackGame['cash'];
+        document.querySelector('#bet').textContent = blackjackGame['bet'];
+    }
+}
+
+
+//Task 6
+
+/*
+const url = 'https://randomuser.me/api/?results=10';
+fetch(url)
+    .then(resp => resp.json())
+    .then(data => {
+        let authors = data.results;
+        for(let increment = 0; i<authors.length; increment++){
+            let div = document.createElement('div');
+            let image = document.createElement('img');
+            let p = document.createElement('p');
+            p.appendChild(document.createTextNode(`${title(authors[increment].name.first)}${title(authors[increment].name.last)}`));
+            image.src = authors[increment].picture.large;
+            div.appendChild(image);
+            div.appendChild(p);
+            document.querySelector('.container-6 .flex-ajax-row-1').appendChild(div);
+        }        
+    });
+let title = str => str[0].toUpperCase() + str.slice(1);
+
+function mustafa(){
+    return '5';
+}
+
+mustafa();
+*/

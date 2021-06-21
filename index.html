@@ -82,20 +82,55 @@
                 <button class="btn-lg btn-danger mr-2" id="blackjack-deal-button">Next Hand</button>
             </div>
         </div>
+
+        <div class="flex-blackjack-row-bet"> 
+            <div id="buttonBet">
+                <button class="btn-lg btn-success mr-2" id="blackjack-increase-bet"> Increase Bet</button>
+                <button class="btn-lg btn-danger mr-2" id="blackjack-decrease-bet"> Decrease Bet</button>
+            </div>
+            <div id="cashInformation">
+                <table style="border: 1px white;" id="money-info">
+                    <tr>
+                        <th>Current Cash</th>
+                        <th>Current Bet</th>
+                    </tr>
+    
+                    <tr>
+                        <td><span id="cash">1000</span></td>
+                        <td><span id="bet">0</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <div class="flex-blackjack-row-3">
             <table style="border: 1px black;">
                 <tr>
                     <th>Wins</th>
                     <th>Losses</th>
                     <th>Draws</th>
+                    <th>Cash Won/Lost</th>
                 </tr>
 
                 <tr>
                     <td><span id="wins">0</span></td>
                     <td><span id="losses">0</span></td>
                     <td><span id="draws">0</span></td>
+                    <td><span id="cashAmount">0</span></td>
                 </tr>
             </table>
+        </div>
+    </div>
+
+    <div class="container-6">
+        <h2>Random Users </h2>
+        <div class="flex-ajax-row-1">
+            <div id="your-box">
+                <h2>You: <span id="your-blackjack-score">0</span></h2>
+            </div>
+            <div id="dealer-box">
+                <h2>Dealer: <span id="dealer-blackjack-score">0</span></h2>
+            </div>
+        </div>
         </div>
     </div>
     <script src ="static/js/script.js"></script>
